@@ -1,0 +1,16 @@
+<datacollector>
+	<dcid> aa:bb:cc:dd:ee </dcid>
+	<nbs>
+		<nb> ... </nb>
+		<nb> ... </nb>
+		...
+	</nbs>
+	<sensors>
+		<sensor>
+			<type> </type>
+			<value> </value>
+		</sensor>
+		...
+	</sensors>
+</datacollector>
+	

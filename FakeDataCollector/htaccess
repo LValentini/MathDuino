@@ -1,0 +1,6 @@
+Options Indexes FollowSymLinks
+RewriteEngine On
+RewriteBase /
+RewriteRule ^ping ping.php [L]
+RewriteRule ^data data.php [L]
+

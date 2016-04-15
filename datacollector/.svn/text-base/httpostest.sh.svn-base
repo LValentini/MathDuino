@@ -1,0 +1,3 @@
+#!/bin/bash
+
+curl -k -X POST http://$1 -d user=tappof

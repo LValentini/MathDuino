@@ -1,0 +1,389 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     14981,        380]
+NotebookOptionsPosition[     14435,        357]
+NotebookOutlinePosition[     14771,        372]
+CellTagsIndexPosition[     14728,        369]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{"Needs", "[", "\"\<GUIKit`\>\"", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Needs", "[", "\"\<DatabaseLink`\>\"", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Off", "[", 
+   StyleBox[
+    RowBox[{"Import", "::", "nffil"}], "MessageName"], 
+   StyleBox["]", "MessageName"]}], 
+  StyleBox[";", "MessageName"]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Off", "[", 
+   StyleBox[
+    RowBox[{"GUIObject", "::", "navail"}], "MessageName"], 
+   StyleBox["]", "MessageName"]}], 
+  StyleBox[";", "MessageName"]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Off", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"nbdir", " ", "=", " ", 
+    RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Import", "[", 
+   RowBox[{
+   "nbdir", " ", "<>", "\"\<libs\>\"", " ", "<>", " ", "\"\</\>\"", "<>", 
+    " ", "\"\<libdb.m\>\""}], " ", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"conn", " ", "=", " ", 
+    RowBox[{"connectToDb", "[", 
+     RowBox[{"{", 
+      RowBox[{"nbdir", ",", "\"\<DB\>\""}], "}"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Import", "[", 
+   RowBox[{
+   "nbdir", " ", "<>", "\"\<libs\>\"", " ", "<>", " ", "\"\</\>\"", "<>", 
+    " ", "\"\<GUI.m\>\""}], " ", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Import", "[", 
+   RowBox[{
+   "nbdir", " ", "<>", "\"\<libs\>\"", " ", "<>", " ", "\"\</\>\"", "<>", 
+    " ", "\"\<DevicesLib.m\>\""}], " ", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Import", "[", 
+   RowBox[{
+   "nbdir", " ", "<>", "\"\<libs\>\"", " ", "<>", " ", "\"\</\>\"", "<>", 
+    " ", "\"\<GraphsLib.m\>\""}], " ", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Import", "[", 
+    RowBox[{
+    "nbdir", " ", "<>", "\"\<libs\>\"", " ", "<>", " ", "\"\</\>\"", "<>", 
+     " ", "\"\<GaugeTabLib.m\>\""}], " ", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Import", "[", 
+   RowBox[{
+   "nbdir", " ", "<>", "\"\<libs\>\"", " ", "<>", " ", "\"\</\>\"", "<>", 
+    " ", "\"\<latlongToTile.m\>\""}], " ", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Import", "[", 
+   RowBox[{
+   "nbdir", " ", "<>", "\"\<libs\>\"", " ", "<>", " ", "\"\</\>\"", "<>", 
+    " ", "\"\<googleGeoLoc.m\>\""}], " ", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Import", "[", 
+    RowBox[{
+    "nbdir", " ", "<>", "\"\<libs\>\"", " ", "<>", " ", "\"\</\>\"", "<>", 
+     " ", "\"\<remoteduino.m\>\""}], " ", "]"}], ";"}], " ", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RemoveScheduledTask", "[", 
+    RowBox[{"ScheduledTasks", "[", "]"}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"selectedArduino", " ", "=", " ", "Null"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"selectedArduinoName", " ", "=", " ", "Null"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"prepareGraph", "[", "\"\<all\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"hourlyTask", " ", "=", 
+    RowBox[{"CreateScheduledTask", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Module", "[", " ", 
+       RowBox[{
+        RowBox[{"{", "devicesList", "}"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"devicesList", " ", "=", " ", 
+          RowBox[{"getCleanDCList", "[", "conn", "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"queryDataCollector", "[", "#", "]"}], "&"}], ",", 
+           "devicesList"}], "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"prepareGraph", "[", "\"\<day\>\"", "]"}], ";"}]}], 
+       "\[IndentingNewLine]", "]"}], ",", " ", "3600"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"dailyTask", " ", "=", " ", 
+    RowBox[{"CreateScheduledTask", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"prepareGraph", "[", "\"\<all_minus_day\>\"", "]"}], ";"}], 
+      "\[IndentingNewLine]", ",", " ", "84600"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"StartScheduledTask", "[", "hourlyTask", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"StartScheduledTask", "[", "dailyTask", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"MathDuino", " ", "=", " ", 
+   RowBox[{"GUIRun", "[", 
+    RowBox[{"expr", ",", " ", 
+     RowBox[{"IncludedScriptContexts", "\[Rule]", 
+      RowBox[{"{", "$Context", "}"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"deviceSelected", "[", "MathDuino", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"stopper", " ", "=", " ", 
+   RowBox[{"CreateScheduledTask", "[", 
+    RowBox[{
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"GUIObjectQ", "[", "MathDuino", "]"}], " ", "\[Equal]", " ",
+           "False"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"RemoveScheduledTask", "[", 
+           RowBox[{"ScheduledTasks", "[", "]"}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Print", "[", "\"\<ScheduledTasks removed\>\"", "]"}]}]}], 
+        "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", "]"}], ",", 
+     " ", "5"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"StartScheduledTask", "[", "stopper", "]"}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->CompressedData["
+1:eJwdylsog2EAxvGh2FYON5TIspKzlVZutDC2Cykp0mjpYxu1UWoph1brK2Qt
+hSUXjGRZmk1Om5IyhgtbLlbWRDGnKJOQQ7zPe/H066l/NtPToIrlcDhZZFBg
+7b1kHI+V65GpO9gYX/4MQ8aSKP1psR9Q7Nz5ggEx7w8O+iuo5phffTuxdjXY
+B1+VfAP0in6M0DLCm4CKJsE0jNgMy1C2lGKHeVG7C7qZM6o3VZTTgd6soXqS
+X6qgJSSvhitekQ5KdzTU8GRZk5rodw5Tn+K+lfBYb22DdtunFoZlFzrI3LKJ
+GiL3ZpFq+3DXR4iZ+WGq2WFMaHE+Vu5q1XzIbkjGW4l7jhNq0JfuhIxKvQZP
+DUlhJfG9po4q1G7ew0HuCdXycJjbRrwKqgqh6U3UDIPLEgYGKnydcNPn74JF
+GdJ+yAoPhqgK4RjkujwmuH9UugCLR6+pcv3ANpxdnPPQ/rxgiyXOdM9T/wF4
+Ywdg
+  "]],
+
+Cell[BoxData["\[IndentingNewLine]"], "Input",
+ CellChangeTimes->{3.582133371420618*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Needs", "[", "\"\<DatabaseLink`\>\"", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"nbdir", " ", "=", " ", 
+   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Import", "[", 
+   RowBox[{
+   "nbdir", " ", "<>", "\"\<libs\>\"", " ", "<>", " ", "\"\</\>\"", "<>", 
+    " ", "\"\<libdb.m\>\""}], " ", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"conn", " ", "=", " ", 
+  RowBox[{"connectToDb", "[", 
+   RowBox[{"{", 
+    RowBox[{"nbdir", ",", "\"\<DB\>\""}], " ", "}"}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"deleteAllFromSensorsValues", "[", "conn", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"populateDB", "[", 
+  RowBox[{"conn", ",", " ", 
+   RowBox[{"DateList", "[", 
+    RowBox[{"{", 
+     RowBox[{"2012", ",", " ", "7", ",", " ", "24"}], "}"}], "]"}], ",", " ", 
+   
+   RowBox[{"DateList", "[", 
+    RowBox[{"{", 
+     RowBox[{"2013", ",", " ", "7", ",", " ", "16"}], "}"}], "]"}], ",", " ", 
+   
+   RowBox[{"getCleanDCList", "[", "conn", "]"}]}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"uberPopulateDB", "[", 
+  RowBox[{"conn", ",", " ", 
+   RowBox[{"DateList", "[", 
+    RowBox[{"{", 
+     RowBox[{
+     "2013", ",", " ", "7", ",", " ", "24", ",", "22", ",", "0", ",", "0"}], 
+     "}"}], "]"}], ",", " ", 
+   RowBox[{"getCleanDCList", "[", "conn", "]"}]}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"CloseSQLConnection", "[", "conn", "]"}]}], "Input",
+ CellChangeTimes->{{3.581100135498901*^9, 3.581100230609667*^9}, {
+   3.581101948797976*^9, 3.5811019489541597`*^9}, {3.58117616501851*^9, 
+   3.58117616865149*^9}, {3.581176884937799*^9, 3.581176885293949*^9}, {
+   3.582123207755722*^9, 3.582123233024283*^9}, 3.582123392561935*^9, 
+   3.5821239657119493`*^9, {3.5821244005264683`*^9, 3.582124401357545*^9}, {
+   3.58212469788704*^9, 3.582124699852893*^9}, {3.583508685981151*^9, 
+   3.583508707981988*^9}, {3.5835156373376293`*^9, 3.583515641438777*^9}, {
+   3.583515867014579*^9, 3.583515887561754*^9}, {3.583515937965611*^9, 
+   3.583515938166875*^9}, {3.583516227829254*^9, 3.5835162793404913`*^9}, {
+   3.583645234836637*^9, 3.583645239638068*^9}, 3.583645501175501*^9, {
+   3.5836455463851*^9, 3.583645546473384*^9}, {3.5836456934448023`*^9, 
+   3.583645697455875*^9}, {3.583645885488901*^9, 3.5836458855977983`*^9}, {
+   3.583646087126561*^9, 3.583646098377593*^9}, {3.583646378217395*^9, 
+   3.583646381315463*^9}}],
+
+Cell[BoxData[
+ RowBox[{"SQLConnection", "[", 
+  RowBox[{"\<\"mathduino\"\>", ",", "16", ",", "\<\"Open\"\>", ",", 
+   RowBox[{"\<\"TransactionIsolationLevel\"\>", 
+    "\[Rule]", "\<\"ReadCommitted\"\>"}]}], "]"}]], "Output",
+ CellChangeTimes->{3.583515939873786*^9, 3.583516045564644*^9, 
+  3.583516282221568*^9, 3.5836447058268433`*^9, 3.5836452480053043`*^9, 
+  3.583645557651308*^9, 3.583645725765881*^9, 3.583645893019726*^9, 
+  3.583646102054612*^9, 3.583646385444655*^9, 3.583646908936741*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"SQLConnection", "[", 
+    RowBox[{"\<\"mathduino\"\>", ",", "1", ",", "\<\"Open\"\>", ",", 
+     RowBox[{"\<\"TransactionIsolationLevel\"\>", 
+      "\[Rule]", "\<\"ReadCommitted\"\>"}]}], "]"}], ",", 
+   RowBox[{"SQLConnection", "[", 
+    RowBox[{"\<\"mathduino\"\>", ",", "3", ",", "\<\"Open\"\>", ",", 
+     RowBox[{"\<\"TransactionIsolationLevel\"\>", 
+      "\[Rule]", "\<\"ReadCommitted\"\>"}]}], "]"}], ",", 
+   RowBox[{"SQLConnection", "[", 
+    RowBox[{"\<\"mathduino\"\>", ",", "5", ",", "\<\"Open\"\>", ",", 
+     RowBox[{"\<\"TransactionIsolationLevel\"\>", 
+      "\[Rule]", "\<\"ReadCommitted\"\>"}]}], "]"}], ",", 
+   RowBox[{"SQLConnection", "[", 
+    RowBox[{"\<\"mathduino\"\>", ",", "7", ",", "\<\"Open\"\>", ",", 
+     RowBox[{"\<\"TransactionIsolationLevel\"\>", 
+      "\[Rule]", "\<\"ReadCommitted\"\>"}]}], "]"}], ",", 
+   RowBox[{"SQLConnection", "[", 
+    RowBox[{"\<\"mathduino\"\>", ",", "9", ",", "\<\"Open\"\>", ",", 
+     RowBox[{"\<\"TransactionIsolationLevel\"\>", 
+      "\[Rule]", "\<\"ReadCommitted\"\>"}]}], "]"}], ",", 
+   RowBox[{"SQLConnection", "[", 
+    RowBox[{"\<\"mathduino\"\>", ",", "11", ",", "\<\"Open\"\>", ",", 
+     RowBox[{"\<\"TransactionIsolationLevel\"\>", 
+      "\[Rule]", "\<\"ReadCommitted\"\>"}]}], "]"}], ",", 
+   RowBox[{"SQLConnection", "[", 
+    RowBox[{"\<\"mathduino\"\>", ",", "13", ",", "\<\"Open\"\>", ",", 
+     RowBox[{"\<\"TransactionIsolationLevel\"\>", 
+      "\[Rule]", "\<\"ReadCommitted\"\>"}]}], "]"}], ",", 
+   RowBox[{"SQLConnection", "[", 
+    RowBox[{"\<\"mathduino\"\>", ",", "15", ",", "\<\"Open\"\>", ",", 
+     RowBox[{"\<\"TransactionIsolationLevel\"\>", 
+      "\[Rule]", "\<\"ReadCommitted\"\>"}]}], "]"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.583515939873786*^9, 3.583516045564644*^9, 
+  3.583516282221568*^9, 3.5836447058268433`*^9, 3.5836452480053043`*^9, 
+  3.583645557651308*^9, 3.583645725765881*^9, 3.583645893019726*^9, 
+  3.583646102054612*^9, 3.583646385444655*^9, 3.58364700847608*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Needs", "[", "\"\<DatabaseLink`\>\"", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"nbdir", " ", "=", " ", 
+   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Import", "[", 
+   RowBox[{
+   "nbdir", " ", "<>", "\"\<libs\>\"", " ", "<>", " ", "\"\</\>\"", "<>", 
+    " ", "\"\<libdb.m\>\""}], " ", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"conn", " ", "=", " ", 
+  RowBox[{"connectToDb", "[", 
+   RowBox[{"{", 
+    RowBox[{"nbdir", ",", "\"\<DB\>\""}], " ", "}"}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"SQLSelect", "[", 
+  RowBox[{"conn", ",", " ", 
+   RowBox[{"SQLTable", "[", "\"\<SensorsValues\>\"", "]"}], ",", " ", 
+   RowBox[{
+    RowBox[{"SQLColumn", "[", "\"\<date\>\"", "]"}], " ", ">", " ", 
+    RowBox[{"SQLDateTime", "[", 
+     RowBox[{"DateList", "[", 
+      RowBox[{"{", 
+       RowBox[{"2013", ",", "7", ",", "16"}], "}"}], "]"}], "]"}]}]}], 
+  "]"}]}], "Input",
+ CellChangeTimes->{{3.582123233437725*^9, 3.582123237744295*^9}, {
+   3.583508638261962*^9, 3.583508648158822*^9}, {3.5835129791844883`*^9, 
+   3.583513013786729*^9}, 3.583513190092525*^9, 3.583513300842401*^9, {
+   3.583513517405879*^9, 3.583513536890966*^9}, {3.583513776607069*^9, 
+   3.583513784221116*^9}, {3.58351382847366*^9, 3.583513831106359*^9}, {
+   3.5835163860341043`*^9, 3.583516448255372*^9}}],
+
+Cell[BoxData[
+ RowBox[{"SQLConnection", "[", 
+  RowBox[{"\<\"mathduino\"\>", ",", "4", ",", "\<\"Open\"\>", ",", 
+   RowBox[{"\<\"TransactionIsolationLevel\"\>", 
+    "\[Rule]", "\<\"ReadCommitted\"\>"}]}], "]"}]], "Output",
+ CellChangeTimes->{
+  3.583508649134956*^9, 3.583513186240881*^9, {3.583513298013472*^9, 
+   3.583513301446155*^9}, 3.583513370877327*^9, 3.583513420858635*^9, {
+   3.5835135954781237`*^9, 3.583513611521188*^9}, 3.583513641761712*^9, 
+   3.583513711316249*^9, 3.5835137846282587`*^9, 3.58351383315026*^9, 
+   3.583514050868455*^9, 3.583514307960455*^9, {3.583515002276731*^9, 
+   3.58351501175233*^9}, 3.583515049714178*^9, 3.583515082583206*^9, 
+   3.583515209490237*^9, 3.583515285873858*^9, 3.583515493138373*^9, 
+   3.5835155577878847`*^9, {3.583516435565637*^9, 3.583516449681809*^9}}]
+}, Open  ]]
+},
+WindowSize->{1151, 714},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 6518, 172, 1072, "Input"],
+Cell[7078, 194, 87, 1, 52, "Input"],
+Cell[CellGroupData[{
+Cell[7190, 199, 2446, 54, 172, "Input"],
+Cell[9639, 255, 500, 8, 31, "Output"],
+Cell[10142, 265, 2042, 38, 172, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12221, 308, 1380, 31, 112, "Input"],
+Cell[13604, 341, 815, 13, 31, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
